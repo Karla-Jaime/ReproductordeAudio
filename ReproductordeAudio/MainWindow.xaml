@@ -1,0 +1,23 @@
+﻿<Window x:Class="ReproductordeAudio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReproductordeAudio"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="207" Width="410">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="24,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" FontFamily="arial" FontSize="16"><Run Text="Reproductor de"/><Run Text=" "/><Run Text="Audio"/></TextBlock>
+        <TextBox x:Name="txtRutaArchivo" HorizontalAlignment="Left" Height="23" Margin="24,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="351"/>
+        <Button x:Name="btnExaminar" Content="ElegirAudio" HorizontalAlignment="Left" Margin="300,13,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button x:Name="btnPausa" Content="Pausa" HorizontalAlignment="Left" Margin="169,83,0,0" VerticalAlignment="Top" Width="70" Click="Button_Click"/>
+        <Button x:Name="btnDetener" Content="Detener" HorizontalAlignment="Left" Margin="253,83,0,0" VerticalAlignment="Top" Width="70" Click="Button_Click"/>
+        <Button x:Name="btnReproduccir" Content="Reproducir" HorizontalAlignment="Left" Margin="82,83,0,0" VerticalAlignment="Top" Width="70" Click="Button_Click"/>
+
+        <TextBlock x:Name="lblTiempoActual" HorizontalAlignment="Left" Margin="24,115,0,0" TextWrapping="Wrap" Text="00.00.00" VerticalAlignment="Top"/>
+        <TextBlock x:Name="lblTiempoTotal" HorizontalAlignment="Left" Margin="331,115,0,0" TextWrapping="Wrap" Text="00.00.00" VerticalAlignment="Top"/>
+        <Slider x:Name="sldTiempo" HorizontalAlignment="Left" Margin="24,137,0,0" VerticalAlignment="Top" Width="351"/>
+
+
+    </Grid>
+</Window>
