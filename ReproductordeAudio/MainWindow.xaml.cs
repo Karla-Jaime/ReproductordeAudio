@@ -18,6 +18,9 @@ using Microsoft.Win32;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
+//Hilo -- proceso de la comp. threads
+using System.Windows.Threading;
+
 namespace ReproductordeAudio
 {
     /// <summary>
@@ -25,6 +28,7 @@ namespace ReproductordeAudio
     /// </summary>
     public partial class MainWindow : Window
     {
+        DispatcherTimer timer; //intervalos de tiempo
         //LeerArchivo
         AudioFileReader reader;
         //ComunicaciónConLaTarjetaDeAudio
@@ -38,6 +42,17 @@ namespace ReproductordeAudio
             btnDetener.IsEnabled = false;                           
             btnPausa.IsEnabled = false;
 
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            //Para añadir respuesta a eventos
+            timer.Tick += Timer_Tick; 
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            lblTiempoActual.Text = reader.CurrentTime.ToString().Substring(0,8);
+
+            
         }
 
         void ListarDispositivosSalida()
@@ -88,16 +103,18 @@ namespace ReproductordeAudio
                     btnPausa.IsEnabled = true;
 
                     lblTiempoTotal.Text = reader.TotalTime.ToString().Substring(0,8);
-                    lblTiempoActual.Text = reader.CurrentTime.ToString().Substring(0,8);
-
-                }
+                    //Se usara un hilo para cambiar la etiqueta 
+                    timer.Start();
+                                                       }
             }
         }
 
         private void Output_PlaybackStopped(object sender, StoppedEventArgs e)
         {
+            timer.Stop();
+
             reader.Dispose();
-            output.Dispose();
+            output.Dispose(); 
         }
 
         private void btnDetener_Click(object sender, RoutedEventArgs e)
