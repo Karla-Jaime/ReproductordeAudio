@@ -32,8 +32,13 @@ namespace ReproductordeAudio
         //LeerArchivo
         AudioFileReader reader;
         //ComunicaciónConLaTarjetaDeAudio
+
         //ExclusivoParaSalida
         WaveOut output;
+
+        bool dragging = false;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -50,16 +55,20 @@ namespace ReproductordeAudio
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            lblTiempoActual.Text = reader.CurrentTime.ToString().Substring(0,8);
-
             
+            lblTiempoActual.Text = reader.CurrentTime.ToString().Substring(0,8);
+            //Actualiza 
+            if (!dragging)
+            {
+                sldTiempo.Value = reader.CurrentTime.TotalSeconds;
+            }
         }
 
         void ListarDispositivosSalida()
         {
             cbDispositivoSalida.Items.Clear();
             for( int i=0; i < WaveOut.DeviceCount; i++)
-            {//GuardalascaracteristicasdelDisp
+            {//Guarda las caracteristicas del Disp
                 WaveOutCapabilities capacidades = WaveOut.GetCapabilities(i);
                 cbDispositivoSalida.Items.Add(capacidades.ProductName);
             }
@@ -87,7 +96,7 @@ namespace ReproductordeAudio
             }
             else
             {
-                //Inicializarydar valor
+                //Inicializar y dar valor
                 if (txtRutaArchivo.Text != null && txtRutaArchivo.Text != string.Empty)
                 {
                     reader = new AudioFileReader(txtRutaArchivo.Text);
@@ -104,8 +113,11 @@ namespace ReproductordeAudio
 
                     lblTiempoTotal.Text = reader.TotalTime.ToString().Substring(0,8);
                     //Se usara un hilo para cambiar la etiqueta 
-                    timer.Start();
-                                                       }
+                    //
+                    sldTiempo.Maximum = reader.TotalTime.TotalSeconds;
+                    sldTiempo.Value = reader.CurrentTime.TotalSeconds;
+
+                    timer.Start();                                                       }
             }
         }
 
@@ -137,6 +149,19 @@ namespace ReproductordeAudio
                 btnPausa.IsEnabled = false;
                 btnDetener.IsEnabled = true;
             }            
+        }
+        //EVENTO Iniciar mov sld
+        private void SldTiempo_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragging = true;
+        }
+        //EVENTO Terminar mov sld / cuando se suelta el sld
+        private void SldTiempo_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragging = false;
+            if(reader != null && output != null && output.PlaybackState != PlaybackState.Stopped){
+                reader.CurrentTime = TimeSpan.FromSeconds(sldTiempo.Value);
+            }
         }
     }
 }

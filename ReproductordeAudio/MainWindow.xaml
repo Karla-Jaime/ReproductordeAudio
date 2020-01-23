@@ -16,7 +16,9 @@
 
         <TextBlock x:Name="lblTiempoActual" HorizontalAlignment="Left" Margin="24,101,0,0" TextWrapping="Wrap" Text="00.00.00" VerticalAlignment="Top"/>
         <TextBlock x:Name="lblTiempoTotal" HorizontalAlignment="Left" Margin="331,101,0,0" TextWrapping="Wrap" Text="00.00.00" VerticalAlignment="Top"/>
-        <Slider x:Name="sldTiempo" HorizontalAlignment="Left" Margin="24,123,0,0" VerticalAlignment="Top" Width="351"/>
+        <Slider x:Name="sldTiempo" HorizontalAlignment="Left" Margin="24,123,0,0" VerticalAlignment="Top" Width="351" 
+                Thumb.DragStarted="SldTiempo_DragStarted" Thumb.DragCompleted="SldTiempo_DragCompleted"/>
+        
         <ComboBox x:Name="cbDispositivoSalida" HorizontalAlignment="Left" Margin="24,170,0,0" VerticalAlignment="Top" Width="351"/>
         <TextBlock HorizontalAlignment="Left" Margin="24,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.034,1.042" Height="17"><Run Text="Sa"/><Run Text="lida"/><Run Text=" "/><Run Text="de"/><Run Text=" "/><Run Text="Audio"/><LineBreak/><Run/></TextBlock>
 
