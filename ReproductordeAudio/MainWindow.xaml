@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReproductordeAudio"
         mc:Ignorable="d"
-        Title="MainWindow" Height="242.334" Width="402.667">
+        Title="MainWindow" Height="242.334" Width="447.838">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="24,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" FontFamily="arial" FontSize="16"><Run Text="Reproductor de"/><Run Text=" "/><Run Text="Audio"/></TextBlock>
         <TextBox x:Name="txtRutaArchivo" HorizontalAlignment="Left" Height="23" Margin="24,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="351"/>
@@ -18,9 +18,11 @@
         <TextBlock x:Name="lblTiempoTotal" HorizontalAlignment="Left" Margin="331,101,0,0" TextWrapping="Wrap" Text="00.00.00" VerticalAlignment="Top"/>
         <Slider x:Name="sldTiempo" HorizontalAlignment="Left" Margin="24,123,0,0" VerticalAlignment="Top" Width="351" 
                 Thumb.DragStarted="SldTiempo_DragStarted" Thumb.DragCompleted="SldTiempo_DragCompleted"/>
-        
+
         <ComboBox x:Name="cbDispositivoSalida" HorizontalAlignment="Left" Margin="24,170,0,0" VerticalAlignment="Top" Width="351"/>
         <TextBlock HorizontalAlignment="Left" Margin="24,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.034,1.042" Height="17"><Run Text="Sa"/><Run Text="lida"/><Run Text=" "/><Run Text="de"/><Run Text=" "/><Run Text="Audio"/><LineBreak/><Run/></TextBlock>
+        <Slider x:Name="sldVolumen" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="400,75,0,0" Width="20" Orientation="Vertical" Height="117" Maximum="1" LargeChange="0.1" SmallChange="0.01" Value="2" ValueChanged="SldVolumen_ValueChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="387,54,0,0" TextWrapping="Wrap" Text="Volumen" VerticalAlignment="Top" Width="47"/>
 
 
     </Grid>

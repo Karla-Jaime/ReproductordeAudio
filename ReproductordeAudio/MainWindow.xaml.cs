@@ -32,12 +32,13 @@ namespace ReproductordeAudio
         //LeerArchivo
         AudioFileReader reader;
         //ComunicaciónConLaTarjetaDeAudio
-
         //ExclusivoParaSalida
         WaveOut output;
 
+
         bool dragging = false;
 
+        VolumeSampleProvider volume;
 
         public MainWindow()
         {
@@ -100,13 +101,20 @@ namespace ReproductordeAudio
                 if (txtRutaArchivo.Text != null && txtRutaArchivo.Text != string.Empty)
                 {
                     reader = new AudioFileReader(txtRutaArchivo.Text);
+                    //necesita una fuente de sonido 
+                    volume = new VolumeSampleProvider(reader);
+                    volume.Volume = (float)(sldVolumen.Value);
+
                     output = new WaveOut();
 
                     output.DeviceNumber = cbDispositivoSalida.SelectedIndex;
 
                     output.PlaybackStopped += Output_PlaybackStopped;
-                    output.Init(reader);
+                    output.Init(volume);
                     output.Play();
+                    //Cambiar el volumen del output
+                    //output.Volume = (float)(sldVolumen.Value);
+                    
                     btnReproducir.IsEnabled = false;
                     btnDetener.IsEnabled = true;
                     btnPausa.IsEnabled = true;
@@ -116,6 +124,8 @@ namespace ReproductordeAudio
                     //
                     sldTiempo.Maximum = reader.TotalTime.TotalSeconds;
                     sldTiempo.Value = reader.CurrentTime.TotalSeconds;
+
+                    
 
                     timer.Start();                                                       }
             }
@@ -148,6 +158,7 @@ namespace ReproductordeAudio
                 btnReproducir.IsEnabled = true;
                 btnPausa.IsEnabled = false;
                 btnDetener.IsEnabled = true;
+
             }            
         }
         //EVENTO Iniciar mov sld
@@ -161,6 +172,15 @@ namespace ReproductordeAudio
             dragging = false;
             if(reader != null && output != null && output.PlaybackState != PlaybackState.Stopped){
                 reader.CurrentTime = TimeSpan.FromSeconds(sldTiempo.Value);
+            }
+        }
+
+        private void SldVolumen_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (output != null && output.PlaybackState != PlaybackState.Stopped)
+            {
+                //output.Volume = (float)(sldVolumen.Value);
+                volume.Volume = (float)(sldVolumen.Value);
             }
         }
     }
